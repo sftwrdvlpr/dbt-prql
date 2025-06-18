@@ -19,7 +19,7 @@ for dialect in $existed_dialects; do
     fi
 
     cat "$file" >> "$(pwd)/$result_path/$dialect_name.prql"
-    cat "$file" >> "$(pwd)/$result_path/$dialect_name.prql"
+    echo >> "$(pwd)/$result_path/$dialect_name.prql"
     echo >> "$(pwd)/$result_path/$dialect_name.prql"
   done
 done
