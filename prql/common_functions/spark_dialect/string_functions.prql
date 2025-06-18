@@ -1,0 +1,6 @@
+# https://spark.apache.org/docs/latest/api/sql/index.html#rlike
+let rlike = column regexp -> s"rlike({column}, {regexp})"
+
+let from_utf8 = binary -> s"from_utf8({binary})"
+
+let to_utf8 = str -> s"to_utf8({str})"

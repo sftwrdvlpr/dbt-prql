@@ -1,0 +1,2 @@
+# https://trino.io/docs/current/functions/bitwise.html#bitwise_and
+let bitwise_and = operand1 operand2 -> s"bitwise_and({operand1}, {operand2})"

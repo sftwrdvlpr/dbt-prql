@@ -1,0 +1,4 @@
+# https://trino.io/docs/current/sql/select.html#grouping-operation
+let grouping = column -> s"grouping({column})"
+
+let grouping_id = column -> grouping column

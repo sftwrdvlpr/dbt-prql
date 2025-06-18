@@ -2,7 +2,10 @@
 authors = ["Maximilian Roos <m@maxroos.com>"]
 description = "Write PRQL in dbt models"
 homepage = "https://github.com/prql/dbt-prql"
-include = [{path = "zzz_dbt_prql.pth", format = ["sdist", "wheel"]}]
+include = [
+    {path = "zzz_dbt_prql.pth", format = ["sdist", "wheel"]},
+    {path = "common_libraries", format = ["sdist", "wheel"]}
+]
 license = "Apache-2.0"
 name = "dbt-prql"
 readme = "README.md"

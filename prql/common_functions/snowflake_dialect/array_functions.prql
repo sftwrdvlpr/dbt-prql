@@ -1,0 +1,10 @@
+# https://docs.snowflake.com/en/sql-reference/functions/flatten
+# s-string representing table must contain select statement
+let explode = values -> s"select * from lateral flatten(input => {values})"
+
+# https://docs.snowflake.com/en/sql-reference/functions/flatten
+# s-string representing table must contain select statement
+let posexplode = values -> s"select f.value, f.index from table(flatten(input => {values})) f"
+
+# https://docs.snowflake.com/en/sql-reference/functions/array_agg
+let collect_set = column -> s"array_agg(distinct {column})"

@@ -1,0 +1,4 @@
+# https://spark.apache.org/docs/latest/api/sql/index.html#split
+# https://docs.snowflake.com/en/sql-reference/functions/split
+# https://trino.io/docs/current/functions/string.html#split
+let split = str delimiter -> s"split({str}, {delimiter})"

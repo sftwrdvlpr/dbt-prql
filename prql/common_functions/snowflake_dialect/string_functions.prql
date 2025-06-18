@@ -1,0 +1,8 @@
+# https://docs.snowflake.com/en/sql-reference/functions/regexp_like
+let rlike = column regexp -> s"regexp_like({column}, {regexp})"
+
+# https://docs.snowflake.com/en/sql-reference/functions/to_char
+let from_utf8 = binary -> s"to_varchar({binary}, 'UTF-8')"
+
+# https://docs.snowflake.com/en/sql-reference/functions/to_binary
+let to_utf8 = str -> s"to_binary({str}, 'UTF-8')"

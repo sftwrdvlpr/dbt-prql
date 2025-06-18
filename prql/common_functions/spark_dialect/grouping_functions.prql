@@ -1,0 +1,5 @@
+# https://spark.apache.org/docs/latest/api/sql/#grouping_id
+let grouping_id = column -> s"grouping_id({column})"
+
+# https://spark.apache.org/docs/latest/api/sql/#grouping
+let grouping = column -> s"grouping({column})"

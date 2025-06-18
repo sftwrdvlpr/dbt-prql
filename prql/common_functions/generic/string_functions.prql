@@ -1,0 +1,9 @@
+# https://spark.apache.org/docs/latest/api/sql/index.html#repeat
+# https://docs.snowflake.com/en/sql-reference/functions/repeat
+# Trino doesn't have repeat function.
+let repeat = str num -> s"repeat({str}, {num})"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#md5
+# https://trino.io/docs/current/functions/binary.html#md5
+# https://docs.snowflake.com/en/sql-reference/functions/md5
+let md5 = str -> s"md5({str})"

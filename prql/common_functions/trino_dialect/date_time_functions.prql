@@ -1,0 +1,11 @@
+# https://trino.io/docs/current/functions/datetime.html#date_add
+let date_add = unit:'day' value start_date -> s"date_add({unit}, {value}, TIMESTAMP {start_date})"
+
+# https://trino.io/docs/current/functions/datetime.html#date_diff
+let date_diff = unit:'day' start_date end_date -> s"date_diff({unit}, TIMESTAMP {end_date}, TIMESTAMP {start_date})"
+
+# https://trino.io/docs/current/functions/datetime.html#to_unixtime
+let to_unixtime = date format:'yyyy-MM-dd HH:mm:ss' part:'epoch' -> s"to_unixtime({date})"
+
+# https://trino.io/docs/current/functions/datetime.html#date_trunc
+let date_trunc = format date -> s"date_trunc({format}, TIMESTAMP {date})"

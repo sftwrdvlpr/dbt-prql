@@ -1,0 +1,10 @@
+# https://trino.io/docs/current/sql/select.html#unnest
+# s-string representing table must contain select statement
+let explode = values -> s"select * from unnest({values}) as t(cc)"
+
+# https://trino.io/docs/current/sql/select.html#unnest
+# Ordinality starts from 1.
+let posexplode = values -> s"select * from unnest({values}) with ordinality as t(value, index)"
+
+# https://trino.io/docs/current/functions/aggregate.html#array_agg
+let collect_set = column -> s"array_agg(distinct {column})"

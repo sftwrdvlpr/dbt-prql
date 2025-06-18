@@ -1,0 +1,2 @@
+# https://spark.apache.org/docs/latest/api/sql/#_4
+let bitwise_and = operand1 operand2 -> s"{operand1} & {operand2}"

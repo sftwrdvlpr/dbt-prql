@@ -1,0 +1,5 @@
+# https://docs.snowflake.com/en/sql-reference/functions/json_extract_path_text
+let get_json_object = json_object path:'' -> s"json_extract_path_text({json_object}, {path})"
+
+# https://docs.snowflake.com/en/sql-reference/functions/arrays_to_object
+let make_map = names vals -> s"arrays_to_object({names}, {vals})"

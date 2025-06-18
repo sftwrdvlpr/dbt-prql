@@ -1,0 +1,10 @@
+# https://spark.apache.org/docs/latest/api/sql/#explode
+# s-string representing table must contain select statement
+let explode = values -> s"select explode({values})"
+
+# https://spark.apache.org/docs/latest/api/sql/#explode
+# s-string representing table must contain select statement
+let posexplode = values -> s"select posexplode({values})"
+
+# https://spark.apache.org/docs/latest/api/sql/#collect_set
+let collect_set = column -> s"collect_set({column})"

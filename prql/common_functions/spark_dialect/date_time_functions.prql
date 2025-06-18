@@ -1,0 +1,11 @@
+# https://spark.apache.org/docs/latest/api/sql/index.html#date_add
+let date_add = unit:'day' value start_date -> s"date_add({start_date}, {value})"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#datediff
+let date_diff = unit:'day' start_date end_date -> s"datediff(TIMESTAMP {end_date}, TIMESTAMP {start_date})"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#unix_timestamp
+let to_unixtime = date format:'yyyy-MM-dd HH:mm:ss' part:'epoch' -> s"unix_timestamp({date}, {format})"
+
+# https://spark.apache.org/docs/latest/api/sql/#date_trunc
+let date_trunc = format date -> s"date_trunc({format}, {date})"

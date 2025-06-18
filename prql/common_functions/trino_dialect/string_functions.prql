@@ -1,0 +1,8 @@
+# https://trino.io/docs/current/functions/regexp.html#regexp_like
+let rlike = column regexp -> s"regexp_like({column}, {regexp})"
+
+# https://trino.io/docs/current/functions/string.html#from_utf8
+let from_utf8 = binary -> s"from_utf8({binary})"
+
+# https://trino.io/docs/current/functions/string.html#to_utf8
+let to_utf8 = str -> s"to_utf8({str})"

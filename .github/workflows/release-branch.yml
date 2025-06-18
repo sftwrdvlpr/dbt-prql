@@ -1,0 +1,56 @@
+name: release-branch.yml
+on:
+  workflow_dispatch:
+
+jobs:
+  get_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Export Version
+        id: get-short-sha
+        run: |
+          echo "VERSION=$(awk -F '"' '/^version *=/ { print $2 }' pyproject.toml)" >> $GITHUB_OUTPUT
+
+  build_release_branch:
+    needs: [get_version]
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.get_version.outputs.VERSION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build common function libraries
+        run: ./.github/workflows/scripts/build_common_libraries.sh
+
+      - name: Check if branch exists
+        run: |
+          echo "Checking if branch 'release/${{ env.version }}' exists..."
+          echo "release_branch_exists=false" >> "$GITHUB_ENV"
+
+          if git ls-remote --exit-code --heads origin release/${{ env.version }} > /dev/null 2>&1; then
+            echo "release_branch_exists=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Create & switch to new release branch
+        run: |
+          git config user.name "query-engine-team"
+          git config user.email "query-engine-team@zscaler.com"
+          git fetch
+          
+          echo "${{ env.release_branch_exists }}"
+          
+          if [ ${{ env.release_branch_exists }} = "true" ]; then
+            git checkout release/${{ env.version }}
+          else
+            git checkout -b release/${{ env.version }}
+          fi
+
+      - name: Push to release branch
+        run: |
+          git add sources/
+          git commit -m "Release ${{ env.version }}"
+          git push origin release/${{ env.version }}

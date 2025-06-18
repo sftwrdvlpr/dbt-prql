@@ -1,0 +1,68 @@
+# ===== GENERIC array_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/index.html#split
+# https://docs.snowflake.com/en/sql-reference/functions/split
+# https://trino.io/docs/current/functions/string.html#split
+let split = str delimiter -> s"split({str}, {delimiter})"
+
+# ===== GENERIC string_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/index.html#repeat
+# https://docs.snowflake.com/en/sql-reference/functions/repeat
+# Trino doesn't have repeat function.
+let repeat = str num -> s"repeat({str}, {num})"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#md5
+# https://trino.io/docs/current/functions/binary.html#md5
+# https://docs.snowflake.com/en/sql-reference/functions/md5
+let md5 = str -> s"md5({str})"
+
+# ===== SPARK array_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/#explode
+# s-string representing table must contain select statement
+let explode = values -> s"select explode({values})"
+
+# https://spark.apache.org/docs/latest/api/sql/#explode
+# s-string representing table must contain select statement
+let posexplode = values -> s"select posexplode({values})"
+
+# https://spark.apache.org/docs/latest/api/sql/#collect_set
+let collect_set = column -> s"collect_set({column})"
+
+# ===== SPARK bitwise_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/#_4
+let bitwise_and = operand1 operand2 -> s"{operand1} & {operand2}"
+
+# ===== SPARK date_time_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/index.html#date_add
+let date_add = unit:'day' value start_date -> s"date_add({start_date}, {value})"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#datediff
+let date_diff = unit:'day' start_date end_date -> s"datediff(TIMESTAMP {end_date}, TIMESTAMP {start_date})"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#unix_timestamp
+let to_unixtime = date format:'yyyy-MM-dd HH:mm:ss' part:'epoch' -> s"unix_timestamp({date}, {format})"
+
+# https://spark.apache.org/docs/latest/api/sql/#date_trunc
+let date_trunc = format date -> s"date_trunc({format}, {date})"
+
+# ===== SPARK grouping_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/#grouping_id
+let grouping_id = column -> s"grouping_id({column})"
+
+# https://spark.apache.org/docs/latest/api/sql/#grouping
+let grouping = column -> s"grouping({column})"
+
+# ===== SPARK json_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/#get_json_object
+let get_json_object = json_object path:'' -> s"get_json_object({json_object}, CONCAT('$.', {path}))"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#map_from_arrays
+let make_map = names vals -> s"MAP_FROM_ARRAYS({names}, {vals})"
+
+# ===== SPARK string_functions.prql =====
+# https://spark.apache.org/docs/latest/api/sql/index.html#rlike
+let rlike = column regexp -> s"rlike({column}, {regexp})"
+
+let from_utf8 = binary -> s"from_utf8({binary})"
+
+let to_utf8 = str -> s"to_utf8({str})"
+

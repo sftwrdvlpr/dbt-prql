@@ -1,0 +1,5 @@
+# https://spark.apache.org/docs/latest/api/sql/#get_json_object
+let get_json_object = json_object path:'' -> s"get_json_object({json_object}, CONCAT('$.', {path}))"
+
+# https://spark.apache.org/docs/latest/api/sql/index.html#map_from_arrays
+let make_map = names vals -> s"MAP_FROM_ARRAYS({names}, {vals})"

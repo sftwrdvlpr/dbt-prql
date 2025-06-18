@@ -1,0 +1,12 @@
+# https://docs.snowflake.com/en/sql-reference/functions/dateadd
+let date_add = unit:'day' value start_date -> s"dateadd({unit}, {value}, {start_date})"
+
+# https://docs.snowflake.com/en/sql-reference/functions/datediff
+let date_diff = unit:'day' start_date end_date -> s"datediff({unit}, {end_date}::TIMESTAMP, {start_date}::TIMESTAMP)"
+
+# https://docs.snowflake.com/en/sql-reference/functions/date_part
+# Use `epoch` date part to get a timestamp.
+let to_unixtime = date format:'yyyy-MM-dd HH:mm:ss' part:'epoch' -> s"date_part({part}, {date})"
+
+# https://docs.snowflake.com/en/sql-reference/functions/date_trunc
+let date_trunc = format date -> s"date_trunc({format}, {date})"

@@ -1,0 +1,2 @@
+# https://docs.snowflake.com/en/sql-reference/functions/bitand
+let bitwise_and = operand1 operand2 -> s"bitand({operand1}, {operand2})"
