@@ -31,10 +31,10 @@ jobs:
           echo "${{ env.release_branch_exists }}"
           
           if [ ${{ env.release_branch_exists }} = "true" ]; then
-            git checkout release/${{ env.VERSION }}
-          else
-            git checkout -b release/${{ env.VERSION }}
+            git push origin --delete release/${{ env.VERSION }} 
           fi
+          
+          git checkout -b release/${{ env.VERSION }}
 
       - name: Build common function libraries
         run: ./.github/workflows/scripts/build_common_libraries.sh

@@ -6,6 +6,8 @@ from jinja2.ext import Extension
 from jinja2.parser import Parser
 from pathlib import Path
 
+from prqlc.prqlc import CompileOptions
+
 
 class PrqlExtension(Extension):
     tags = {"prql"}
