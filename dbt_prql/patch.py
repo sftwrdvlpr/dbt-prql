@@ -1,3 +1,5 @@
+import re
+
 from jinja2.ext import Extension
 from jinja2.parser import Parser
 
@@ -29,6 +31,7 @@ class PrqlExtension(Extension):
         logger = logging.getLogger(__name__)
 
         prql = caller()
+        prql = re.sub(r'\."([^"]+)"\.', r'.`\1`.', prql)
         logger.info(f"Parsing PRQL:\n{prql}")
         sql = prql_python.compile(prql)
         output = f"""
