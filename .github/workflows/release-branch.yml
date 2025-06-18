@@ -4,7 +4,6 @@ on:
 
 jobs:
   build_release_branch:
-    needs: [get_version]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
