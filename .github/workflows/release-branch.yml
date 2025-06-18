@@ -9,9 +9,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build common function libraries
-        run: ./.github/workflows/scripts/build_common_libraries.sh
-
       - name: Get Version
         run: |
           echo "VERSION=$(awk -F '"' '/^version *=/ { print $2 }' pyproject.toml)" >> $GITHUB_ENV
@@ -38,6 +35,9 @@ jobs:
           else
             git checkout -b release/${{ env.VERSION }}
           fi
+
+      - name: Build common function libraries
+        run: ./.github/workflows/scripts/build_common_libraries.sh
 
       - name: Push to release branch
         run: |
