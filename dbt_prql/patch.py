@@ -1,39 +1,51 @@
 import re
+import logging
+from functools import lru_cache
 
 from jinja2.ext import Extension
 from jinja2.parser import Parser
+from pathlib import Path
 
 
 class PrqlExtension(Extension):
     tags = {"prql"}
 
     def parse(self, parser: Parser):
-        import logging
-
         from jinja2 import nodes
         from jinja2.nodes import Const
 
         logger = logging.getLogger(__name__)
 
-        line_number = next(parser.stream).lineno
+        token = next(parser.stream)
+        args = []
+
+        if parser.stream.current.type != 'block_end':
+            args.append(parser.parse_expression())
+
+        if len(args) == 0:
+            args.append(Const(""))
+
         prql_jinja = parser.parse_statements(["name:endprql"], drop_needle=True)
         logger.info(f"Parsing statement:\n{prql_jinja}")
         return nodes.CallBlock(
-            self.call_method("_to_sql", [Const("")]), [], [], prql_jinja
-        ).set_lineno(line_number)
+            self.call_method("_to_sql", args), [], [], prql_jinja
+        ).set_lineno(token.lineno)
 
     def _to_sql(self, args, caller):
-        _ = args
-        import logging
-
-        import prql_python
+        import prqlc
 
         logger = logging.getLogger(__name__)
 
+        if args == "":
+            target = "sql.generic"
+        else:
+            target = "sql." + args
+
         prql = caller()
         prql = re.sub(r'\."([^"]+)"\.', r'.`\1`.', prql)
+        prql = f"{load_common_library(args)}\n {prql}"
         logger.info(f"Parsing PRQL:\n{prql}")
-        sql = prql_python.compile(prql)
+        sql = prqlc.compile(prql, CompileOptions(target=target))
         output = f"""
 -- SQL created from PRQL. Original PRQL:
 {chr(10).join(f'-- {line}' for line in prql.splitlines())}
@@ -43,6 +55,20 @@ class PrqlExtension(Extension):
         logger.info(f"Parsed into SQL:\n{sql}")
         return output
 
+
+@lru_cache
+def load_common_library(dialect: str) -> str:
+    logger = logging.getLogger(__name__)
+    commons_path = f"{Path(__file__).parent.parent}/common_libraries/{dialect}.prql"
+
+    if not Path(commons_path).exists():
+        logger.info(f"No common functions will be loaded for {dialect} dialect.")
+        return ""
+
+    logger.info(f"Common functions will be loaded for {dialect} dialect.")
+
+    with open(commons_path, "r") as f:
+        return f.read()
 
 def patch_dbt_environment() -> None:
     import os

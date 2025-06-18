@@ -13,14 +13,15 @@ repository = "https://github.com/prql/dbt-prql"
 version = "0.2.4"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0"
+python = ">=3.9,<4.0"
+packaging = "25.0"
 
 # We're conservative on these because we're using internal APIs.
 # We'll try and quite quickly on a new _.X._ release from dbt.
 # And we can unblock this when we have upstream tests https://github.com/prql/dbt-prql/issues/6
 dbt-core = ">=1.8.0,<=1.9.4"
 dbt-common = ">=1.10.0,<1.22.0"
-prql_python = "0.11.2"
+prqlc = {git = "https://github.com/zscaler-zfab/prql.git", branch = "release/0.13.5", subdirectory = "sources"}
 
 [tool.poetry.dev-dependencies]
 black = "*"
