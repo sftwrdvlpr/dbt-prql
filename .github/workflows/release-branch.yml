@@ -3,28 +3,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  get_version:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Export Version
-        id: get-short-sha
-        run: |
-          echo "VERSION=$(awk -F '"' '/^version *=/ { print $2 }' pyproject.toml)" >> $GITHUB_OUTPUT
-
   build_release_branch:
     needs: [get_version]
     runs-on: ubuntu-latest
-    env:
-      VERSION: ${{ needs.get_version.outputs.VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build common function libraries
         run: ./.github/workflows/scripts/build_common_libraries.sh
+
+      - name: Get Version
+        run: |
+          echo "VERSION=$(awk -F '"' '/^version *=/ { print $2 }' pyproject.toml)" >> $GITHUB_ENV
 
       - name: Check if branch exists
         run: |
