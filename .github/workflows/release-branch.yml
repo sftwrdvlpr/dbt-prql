@@ -2,6 +2,10 @@ name: release-branch.yml
 on:
   workflow_dispatch:
 
+env:
+  PRQL_COMMON_FUNCTIONS_PATH: 'prql/common_functions'
+  COMMON_FUNCTIONS_TARGET_PATH: "common_libraries"
+
 jobs:
   build_release_branch:
     runs-on: ubuntu-latest
@@ -37,7 +41,7 @@ jobs:
           git checkout -b release/${{ env.VERSION }}
 
       - name: Build common function libraries
-        run: ./.github/workflows/scripts/build_common_libraries.sh
+        run: ./.github/workflows/scripts/build_common_libraries.sh "${{ env.COMMON_FUNCTIONS_TARGET_PATH }}" "${{ env.PRQL_COMMON_FUNCTIONS_PATH }}"
 
       - name: Push to release branch
         run: |
