@@ -9,8 +9,6 @@ for dialect in $existed_dialects; do
   dialect_name=$(echo "$dialect" | cut -d'_' -f1)
   files=$(find "$(pwd)$prql_common_functions_path" -type f -name '*.prql' | grep -E "generic|$dialect_name" | sort)
 
-  rm "$(pwd)/$result_path/$dialect_name.prql"
-
   for file in $files; do
     if [[ "$file" == *"generic"* ]]; then
       echo "# ===== GENERIC $(basename "$file") =====" >> "$(pwd)/$result_path/$dialect_name.prql"
