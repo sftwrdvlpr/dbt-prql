@@ -41,6 +41,6 @@ jobs:
 
       - name: Push to release branch
         run: |
-          git add sources/
+          git add common_libraries/
           git commit -m "Release ${{ env.VERSION }}"
           git push origin release/${{ env.VERSION }}
