@@ -41,7 +41,7 @@ jobs:
           git checkout -b release/${{ env.VERSION }}
 
       - name: Build common function libraries
-        run: ./.github/workflows/scripts/build_common_libraries.sh "${{ env.COMMON_FUNCTIONS_TARGET_PATH }}" "${{ env.PRQL_COMMON_FUNCTIONS_PATH }}"
+        run: ./.github/workflows/scripts/build_common_libraries.sh "${{ env.PRQL_COMMON_FUNCTIONS_PATH }}" "${{ env.COMMON_FUNCTIONS_TARGET_PATH }}"
 
       - name: Push to release branch
         run: |
