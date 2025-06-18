@@ -28,10 +28,10 @@ jobs:
 
       - name: Check if branch exists
         run: |
-          echo "Checking if branch 'release/${{ env.version }}' exists..."
+          echo "Checking if branch 'release/${{ env.VERSION }}' exists..."
           echo "release_branch_exists=false" >> "$GITHUB_ENV"
 
-          if git ls-remote --exit-code --heads origin release/${{ env.version }} > /dev/null 2>&1; then
+          if git ls-remote --exit-code --heads origin release/${{ env.VERSION }} > /dev/null 2>&1; then
             echo "release_branch_exists=true" >> "$GITHUB_ENV"
           fi
 
@@ -44,13 +44,13 @@ jobs:
           echo "${{ env.release_branch_exists }}"
           
           if [ ${{ env.release_branch_exists }} = "true" ]; then
-            git checkout release/${{ env.version }}
+            git checkout release/${{ env.VERSION }}
           else
-            git checkout -b release/${{ env.version }}
+            git checkout -b release/${{ env.VERSION }}
           fi
 
       - name: Push to release branch
         run: |
           git add sources/
-          git commit -m "Release ${{ env.version }}"
-          git push origin release/${{ env.version }}
+          git commit -m "Release ${{ env.VERSION }}"
+          git push origin release/${{ env.VERSION }}
